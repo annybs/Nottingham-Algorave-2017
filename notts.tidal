@@ -1,0 +1,868 @@
+{-
+anny @ notts algorave 2017
+setlist:
+  - piston vi
+  - raise - battery 1 - piston iii
+  - juliese
+  - haddeo (algorave remix)
+  - battery 2 - battery 3 - piston viii
+-}
+
+let bpm b = cps (b/60)
+hush
+
+-- [1] piston vi
+
+bpm 138
+
+d'bass $ bass'6
+
+d'bz $ bass2'6
+d'fly $ plode'6
+d'cymb $ cymb'6
+
+d'perc $ wt'2 # gain "0.85"
+
+d'bass silence
+d'drum $ drum'6
+
+d'misc $ slow 16 $ bass' 64
+
+d'cymb $ density (5%4) $ whenmod 9 4 (density 1.5) $ cymb'6
+
+d'gnome $ wtsn'6
+
+d'drum $ overlay sn'6 $ drum'6
+
+d'bass $ (0.6 ~>) $ bass'4
+
+msil [d'perc,d'gnome,d'misc]
+
+d'gnome $ gnome'6 5
+d'gnome $ gnome'6 3
+
+msil [d'drum,d'fly,d'bz,d'cymb]
+
+d'drum $ sound "[[k k:1]*2 [sn k:1 ~ k] [~ k:1 k ~] [~ sn ~ k]]/8"
+
+d'fly $ fly'5 False
+
+d'cymb $ (0.5 <~) $ cymb'2 "0.7"
+
+d'bz $ bass2'6
+d'drum $ overlay sn'6 $ drum'6
+
+msil [d'perc,d'fly,d'bz]
+
+-- [2] pigs nose: raise
+bpm 138
+bpm 125
+bpm 117
+
+msil [d'gnome, d'bass]
+d'drum $ drum'6
+
+d'ql $ slow (10%4) $ spread density [1,5%4] $
+  sound "[qlatibro:1 qlatibro]*2"
+  # vowel "e"
+
+d'cymb silence
+
+d'drum $ overlay (cf $ pn'hh) $ drum'6
+d'casio $ cf $ s "casio*2 ~"
+
+d'mons $ cf $
+  striate 4 $ slow 2 $ s "monsterb"
+  # gain "0.7"
+  # speed ((+0.6).(/2) <$> slow 4 sinewave1)
+
+d'mons $ cf $
+  spread density [1,2] $
+  striate 4 $ slow 2 $ s "monsterb"
+  # gain "0.7"
+  # speed ((+0.6).(/2) <$> slow 4 sinewave1)
+
+d'bass $ bass'5
+
+d'qs $ cf $
+  jux (iter 8) $ pn'qs 2
+  # gain "0.95"
+
+d'bass $ every 2 (density 2) $ bass'5
+
+d'qs $ cf $
+  jux (iter 8) $ pn'qs 2
+  # speed ((+0.7).(/2) <$> slow 3.2 triwave1)
+  # gain "0.95"
+
+-- quickly
+d'drum silence
+d'drum $ overlay (cf $ pn'sn) $ overlay (cf $ pn'hh) $ drum'6
+
+d'qs $ cf $
+  spread density [1,1,2,0.5] $
+  jux (iter 8) $ pn'qs 2
+  # speed ((+0.7).(/2) <$> slow 3.2 triwave1)
+  # gain "0.95"
+
+msil [d'mons, d'drum, d'ql]
+
+d'qs $ cf $
+  spread density [1,1,0.5,2] $
+  jux (iter 8) $ pn'qs 2
+  # speed ((+0.7).(/2) <$> slow 3.2 triwave1)
+  # gain "0.95"
+
+d'drum $ cf $ overlay (pn'sn) $ overlay (pn'hh) $
+  s "k(3,8)"
+
+d'jbass $ slow 8 $ sound "jungbass jungbass:1"
+  # pan (slow 2 sinewave1)
+  # speed "1.2"
+
+-- transition to [2b] battery 1
+d'hand $ b1'hand
+
+d'fly $ fly'5 True
+
+d'hand $ b1'hand
+  # shape ((/2) <$> slow (10%4) sinewave1)
+
+d'bass $ slow 4 $ b1'bass
+  # n "0 1 0 0"
+  # speed (thirdosc1 <$> slow 8 sinewave1)
+
+-- nice drum
+d'perc $ cf $ b1'perc
+
+d'perc $ cf $ b1'perc
+  # n (density 3 $ run 2)
+
+d'hand $ b1'hand
+  # shape ((/2) <$> slow (10%4) sinewave1)
+  # pan (halfosc <$> slow (8%3) sinewave1)
+
+bpm 117
+bpm 125
+
+msil [d'fly, d'casio, d'jbass]
+
+d'perc $ cf $
+  jux (0.25 <~) $ b1'perc
+  # n (density 3 $ run 2)
+
+-- good bass
+d'bass $ cf $
+  spread slow [1,3] $
+  striate 16 $
+  b1'bass
+  # n "0 1 0 0"
+  # speed (halfosc1 <$> slow 8 sinewave1)
+  # gain "0.9"
+
+d'drum $ cf $ pn'hh
+d'tac $ cf $ b1'tac
+
+d'tac $ cf . whenmod 7 4 (density 1.5) $ b1'tac
+
+d'drum $ cf $ overlay (sound "[~ psn:1]") $ pn'hh
+
+d'perc $ cf $
+  spread slow [2,1] $
+  jux (0.25 <~) $ b1'perc
+  # n (density 3 $ run 2)
+
+d'drum $ cf $ overlay (sound "[~ psn:1]") $ overlay (pn'hh) $
+  s "k(3,8)"
+
+d'warb $ b1'warbler
+
+d'drum $ cf $ overlay (sound "[~ psn:1]") $ overlay (pn'hh) $
+  every 4 (brak . density 2) $ s "k(3,8)"
+
+msil [d'tac, d'bass]
+
+d'cymb $ (0.5 <~) $ cymb'2 "0.7"
+
+d'drum $ cf $
+  overlay (
+    every' 8 8 (density 1.5) $
+    every 2 (density 3) $
+    sound "[~ psn:1]"
+    ) $
+  overlay (pn'hh) $
+  every 4 (brak . density 2) $ s "k(3,8)"
+
+-- merge in a bit of [2c] piston iii
+d'bass2 $ bass'3 "o i" "1" True # gain "1.1"
+d'shard $ ((1%16) <~) $ shard'2
+
+d'perc $ cf $
+  slow 2 . spread slow [2,4,2,3] $
+  jux (0.25 <~) $ b1'perc
+  # n (density 3 $ run 2)
+
+d'bass2 $ bass'3 "o i" "0" True # gain "1.1"
+
+d'drum $ cf $
+  overlay (
+    every' 8 8 (density 1.5) $
+    every 2 (density 3) $
+    sound "[~ psr:1]"
+    ) $
+  pn'hh
+
+d'bass2 $ bass'3 "o i" "1" True # gain "1.1"
+
+d'drum $ cf $ every' 8 8 (density 1.5) $ every 2 (density 3) $ sound "[~ psn:1]"
+
+msil [d'hand, d'bz, d'bass2, d'cymb]
+d'shard silence
+
+-- [3] juliese
+
+d'bass $ bassbass
+
+bpm 125
+bpm 105
+bpm 99
+
+d'drum silence
+
+msil [d'perc, d'warb]
+d'drum $ s "k"
+d'drum $ morek $ s "k"
+d'perc $ hhb False
+d'bass $ bassbass'
+
+d'perc $ whenmod 16 15 (density 3) $ hhb False
+d'drum $ overlay ((0.5 ~>) $ s "rsn/2") $ morek $ s "k"
+
+d'perc $ whenmod 16 15 (density 3) $ hhb True
+
+d'drum $ overlay ((1 ~>) $ s "cy/8") $
+  overlay ((0.5 ~>) $ s "rsn/2") $ morek $ s "k"
+
+d'bass $ whenmod 3 2 (slow 2) $ bassbass'
+d'bass $ whenmod 4 2 (density 3) $ whenmod 3 2 (slow 2) $ bassbass'
+
+d'perc $ (# pan (density 16 "0.25 0.75")) $ whenmod 16 15 (density 3) $ hhb True
+
+d'perc $ iter 4 $ (# pan (density 16 "0.25 0.75")) $ whenmod 16 15 (density 3) $ hhb True
+d'drum $ overlay ((0.5 ~>) $ s "rsn/2") $ morek $ s "k"
+
+d'udu $ ududu
+
+d'wbass $ chop 16 $ sound "[wb wb:1 ~ ~]/4" # gain "0.9"
+d'wbass $ chop 16 $ sound "[wb [wb:1 wb:2] ~ ~]/4" # gain "0.9"
+
+d'wbass $ every' 4 4 (0.32 ~>) $ chop 16 $ sound "[wb [wb:1 wb:2] ~ [wb:1 wb:2]]/4" # gain "0.9"
+
+d'eg $ density 0.25 $ eg
+  # gain "0.8"
+
+d'eg $
+  density 0.25 $
+  slowspread density [1, 2, 0.5, 2] $ eg
+  # gain "0.8"
+
+d'eg $ (# speed ((+0.8).(/2) <$> slow 4 saw1)) $
+  density 0.25 $
+  slowspread density [1, 2, 0.5, 2] $ eg
+  # gain "0.8"
+
+d'wbass $ every' 4 4 (0.32 ~>) $ chop 16 $ sound "[wb [wb:1 wb:2] ~ [wb:1 wb:2]]/4" # gain "0.9"
+  # speed "[1 1 2]/3"
+
+d'eg $ (# speed ((+0.8).(/2) <$> slow 4 saw1)) $
+  density 0.245 $ -- !
+  slowspread density [1, 2, 0.5, 2] $ eg
+  # gain "0.8"
+
+mapM_ ($ silence) [d'perc, d'bass]
+
+-- fuck yeah. const rules
+d'eg $ (0.18 <~) $ every 2 (const silence) $
+  (# speed ((+0.8).(/2) <$> slow 4 saw1)) $
+  density 0.245 $
+  slowspread density [1, 2, 0.5, 2] $ eg
+  # gain "0.8"
+
+d'udu $ (every' 3 2 . sometimesBy 0.5 $ density (4%3)) $ ududu
+d'drum $ overlay ((0.5 ~>) $ s "rsn/2") $ morek $ every' 12 2 (density 3) $ s "k"
+
+d'pc $ pcbeep
+d'pc $ slowspread (\x -> within x (slow 1.5)) [(0.25, 0.5), (0.75, 1), (0.25, 0.75)] $ pcbeep
+
+d'udu $ (every' 3 2 . sometimesBy 0.5 $ density (4%3)) $
+  (whenmod 7 5 $ trunc (5%6)) $ ududu
+
+d'pc $ slowspread ($) [rev, id, brak, (0.25 ~>), id] $
+  slowspread (\x -> within x (slow 1.5)) [(0.25, 0.5), (0.75, 1), (0.25, 0.75)] $ pcbeep
+
+d'wbass $ every' 4 4 (0.32 ~>) $ chop 16 $ sound "[wb [wb:1 wb:2] ~ [[wb:1 wb:1/2] wb:2]]/4" # gain "0.9"
+  # speed "[1 1 2]/3"
+
+d'pc $ whenmod 7 5 (density 1.25) $
+  slowspread ($) [rev, id, brak, (0.25 ~>), id] $
+  slowspread (\x -> within x (slow 1.5)) [(0.25, 0.5), (0.75, 1), (0.25, 0.75)] $ pcbeep
+
+d'gt $ gt
+  # gain "0.87"
+
+d'gt $ gt
+  # gain "0.87"
+  # speed ((+1).(/4) <$> slow 1.95 sinewave1)
+
+-- OOOOOOHHHH MY FUCK
+d'wbass $ (sometimesBy 0.6 $ superimpose (rev . slow (5%4))) $
+  every' 4 4 (0.32 ~>) $ chop 16 $ sound "[wb [wb:1 wb:2] ~ [[wb:1 wb:1/2] wb:2]]/4" # gain "0.9"
+  # speed "[1 1 2]/3"
+
+d'perc $ iter 4 $ (# pan (density 16 "0.25 0.75")) $ whenmod 16 15 (density 3) $ hhb True
+
+-- funkier bassline w slowspread lambda, thanks yaxu. thaxu
+d'bass $ slowspread (\x -> within (0.5, 1) (x)) [id, slow 2 . brak] $
+  whenmod 4 2 (density 3) $ whenmod 3 2 (slow 2) $ bassbass'
+
+d'udu $ (every' 5 3 $ brak) $
+  (every' 3 2 . sometimesBy 0.5 $ density (4%3)) $
+  (whenmod 7 5 $ trunc (5%6)) $ ududu
+
+-- bye const
+d'eg $ (0.18 <~) $
+  (# speed ((+0.8).(/2) <$> slow 4 saw1)) $
+  density 0.245 $
+  slowspread density [1, 2, 0.5, 2] $ eg
+  # gain "0.8"
+
+d'gt $ density 0.98 $ gt
+  # gain "0.87"
+  # speed ((+1).(/4) <$> slow 1.95 sinewave1)
+
+mapM_ ($ silence) [d'eg, d'wbass]
+d'drum $ ju'drum2
+
+mapM_ ($ silence) [d'bass, d'udu, d'pc]
+mapM_ ($ silence) [d'gt]
+
+-- [4] haddeo (algorave remix)
+
+bpm 105
+
+-- pt 1: intro
+
+d'drum $ stack [
+  n "1/4" # s "drum"
+  ]
+
+d'perc $ iter 4 $ (# pan (density 16 "0.25 0.75")) $ whenmod 16 15 (density 3) $ hhb True
+  # gain "0.4"
+
+d'perc silence
+
+d'wax $ slow 16 . striate 256 $ s "icarus"
+
+d'drum $ stack [
+  n "1/4" # s "drum",
+  n "[~ 0]" # s "kit"
+  ]
+
+d'drum $ stack [
+  n "[1*2, 0*8]/8" # s "drum",
+  n "[~ 0]" # s "kit"
+  ]
+
+d'wax $ retrig $ slow 20 $ sound "icarus:1"
+
+-- drop 1
+
+d'nim $ slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+d'wax silence
+
+d'drum $ stack [
+  n "[1*2, 0*8, [~!! [~!! 0] ! ~!!]]/8" # s "drum",
+  n "~ 0" # s "kit"
+  ]
+
+d'drum $ stack [
+  n "[1*2, 0*8, [~!! [~!! 0] ! ~!!]]/8" # s "drum",
+  n "[[~ 0] [[2!! ~]/4 0]]/2" # s "kit"
+  ]
+
+d'wax $ slow 16 . striate 256 $ s "icarus"
+
+d'drum $ stack [
+  n "[1*2, 0*8, [~!! [~!! 0] ! ~!!]]/8" # s "drum",
+  withmod 11 5 0.5 1 (density 2) $
+  n "[[~ 0] [[2!! ~]/4 0]]/2" # s "kit"
+  ]
+
+d'fx3 $
+  (1.5 ~>) $
+  slow 4 $ chop 48 $
+  sound (samples "snoo" <$> slow 7 $ run 7)
+  # gain "0.8"
+  # cut "10"
+
+d'nim $ superimpose (iter 4) $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'nim $ superimpose (iter 4 . nim'osc) $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'fx1 $
+  (2 ~>) $ chop 16 $
+  s "dorr/4"
+  # hresonance "0.05"
+  # hcutoff "200"
+  # gain "0.8"
+
+d'drum $ stack [
+  n "[1*2, 0*8, [~!! [~!! 0] ! ~!!]]/8" # s "drum",
+  whenmod 3 2 (density 2) $
+  withmod 11 5 0.5 1 (density 2) $
+  n "[[~ 0] [[2!! ~]/4 0]]/2" # s "kit"
+  ]
+
+d'nim $ superimpose (iter 6 . nim'osc) $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+-- pt 2: offbeat
+
+d'drum $ mt 16 16 $ stack [
+  n "[1*2, 0*8, [~!! [~!! 0] ! ~!!]]/8" # s "drum",
+  whenmod 3 2 (density 2) $
+  withmod 11 5 0.5 1 (density 2) $
+  n "[[~ 0] [[2!! ~]/4 0]]/2" # s "kit"
+  ]
+
+d'nim $ superimpose (iter 6 . nim'osc . (# nudge "0")) $
+  mt 16 16 $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'fx1 $ mt 16 16 $
+  (2 ~>) $ chop 16 $
+  s "dorr/4"
+  # hresonance "0.05"
+  # hcutoff "200"
+  # gain "0.8"
+
+msil [d'wax, d'fx2, d'fx3]
+
+d'nim $ mt 16 16 $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'nim $ mt 16 16 $
+  whenmod 5 3 rev $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'nim $ mt 16 16 $
+  every' 2 2 (within (0, 0.5) (const silence)) $
+  whenmod 5 3 rev $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'fx2 $ mt 16 16 $ 1.75 ~> s "tubal/4"
+
+d'nim $ mt 16 16 $
+  every 3 (density 2) $
+  every' 2 2 (within (0, 0.5) (const silence)) $
+  whenmod 5 3 rev $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'fx2 $ mt 16 16 $
+  stack [
+    1.75 ~> s "tubal/4",
+    chop 16 $
+    3.75 ~> s "duck/4"
+    # gain "0.6"
+    # speed "0.9"
+    ]
+
+d'nim $ superimpose (iter 4 . nim'osc . (# nudge "0")) $
+  mt 16 16 $
+  every 3 (density 2) $
+  every' 2 2 (within (0, 0.5) (const silence)) $
+  whenmod 5 3 rev $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+-- intermission
+
+msil [d'fx1, d'fx2]
+
+solo $ d'nim $ superimpose (iter 4 . nim'osc . (# nudge "0")) $
+  mt 16 16 $
+  every 3 (density 2) $
+  every' 2 2 (within (0, 0.5) (const silence)) $
+  whenmod 5 3 rev $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'nim $ superimpose (iter 4 . nim'osc . (# nudge "0")) $
+  every' 2 2 (within (0, 0.5) (const silence)) $
+  whenmod 5 3 rev $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+let s = striate 16
+  in d'bass $
+     slow 8 $ stack [
+       s $ sound "hbass",
+       s $ sound "sine"
+       ]
+     # gain "0.9"
+
+d'nim $ superimpose (iter 4 . nim'osc . (# nudge "0")) $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+-- pt 3: funk
+
+d'drum $ n "0*4" # s "kit"
+  # gain "0.9"
+
+d'drum $ n "0*4" # s "drum"
+  # gain "0.9"
+
+d'drum $ swing' $ stack [
+  n "[1*2, 0*8, [~!! [~!! 0] ! ~!!]]/8" # s "drum",
+  whenmod 3 2 (density 2) $
+  withmod 11 5 0.5 1 (density 2) $
+  n "[[~ 0] [[2!! ~]/4 0]]/2" # s "kit"
+  ]
+
+d'nim $ (1 ~>) $ slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'drum $ swing' $ stack [
+  n "[1*2, 0*8, [~!! [~!! 0] ! ~!!]]/8" # s "drum",
+  whenmod 3 2 (density 2) $
+  withmod 11 5 0.5 1 (density 2) $
+  n "[[~ 0] [[2!! ~]/4 0]]/2" # s "kit",
+  n "[~ 1]/2" # s "hsn"
+  # gain "0.85"
+  ]
+
+d'nim $ whenmod 16 12 (# vowel "[a i]/3") $
+  (1 ~>) $ slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'nim $ every' 16 1 (# vowel "o u") $
+  whenmod 16 12 (# vowel "[a i]/3") $
+  (1 ~>) $ slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'drum $ swing' $ stack [
+  n "[1*2, 0*8, [~!! [~!! 0] ! ~!!]]/8" # s "drum",
+  whenmod 3 2 (density 2) $
+  withmod 11 5 0.5 1 (density 2) $
+  n "[[~ 0] [[2!! ~]/4 0]]/2" # s "kit",
+  n "[~ [1 0/8 1/2 0/2]]/2" # s "hsn"
+  # gain "0.85"
+  ]
+
+d'bass2 $ swing' $
+  n "[~ [~ 1] [~!! 0] [~ 0 1 ~]]/4" # s "bass2"
+  # speed (0.5 ~> "[2 1]")
+  # gain "0.82"
+
+d'fx1 $
+  (2 ~>) $ chop 16 $ s "dorr/4"
+  # hresonance "0.05"
+  # hcutoff "200"
+  # gain "0.8"
+
+d'fx2 $
+  stack [
+    1.75 ~> s "tubal/4",
+    chop 16 $
+    3.75 ~> s "duck/4"
+    # gain "0.6"
+    # speed "0.9"
+    ]
+
+d'nim $ every' 16 1 ((# vowel "o u") . nim'del) $
+  whenmod 16 12 (# vowel "[a i]/3") $
+  (1 ~>) $ slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'fx1 $
+  superimpose (slow 2) $
+  (2 ~>) $ chop 16 $ s "dorr/4"
+  # hresonance "0.05"
+  # hcutoff "200"
+  # gain "0.8"
+
+d'wax $ slow 16 . striate 256 $ s "icarus"
+
+d'drum $ swing' $ stack [
+  n "[1*2, 0*8, [[~ 0] ~! [~!! 0] [~! 0!] ~!!]]/8" # s "drum",
+  whenmod 3 2 (density 2) $
+  withmod 11 5 0.5 1 (density 2) $
+  n "[[~ 0] [[2!! ~]/4 0]]/2" # s "kit",
+  n "[~ [1 0/8 1/2 0/2]]/2" # s "hsn"
+  # gain "0.85"
+  ]
+
+d'nim $ superimpose (iter 4) $
+  every' 16 1 ((# vowel "o u") . nim'del) $
+  whenmod 16 12 (# vowel "[a i]/3") $
+  (1 ~>) $ slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'nim $ superimpose (iter 4 . nim'osc) $
+  every' 16 1 ((# vowel "o u") . nim'del) $
+  whenmod 16 12 (# vowel "[a i]/3") $
+  (1 ~>) $ slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'drum $ swing' $ stack [
+  n "[1*2, 0*8, [[~ 0] ~! [~!! 0] [~! 0!] ~!!]]/8" # s "drum",
+  n "[~ 0]" # s "kit",
+  n "[~ [1 0/8 1/2 0/2]]/2" # s "hsn"
+  # gain "0.85"
+  ]
+
+-- outro
+
+msil [d'nim, d'wax, d'fx2, d'fx3]
+
+d'hi $
+  swing' $
+  every 3 rev $
+  whenmod 12 8 (0.5 <~) $
+  (0.5 ~>) $
+  slow 8 $
+  gap 64 $
+  n "[0 1]/2" # s "nimble"
+  # speed ((-4+).(*(-1)) <$> density 1.1 sine1)
+
+d'nim $ (0.25 ~>) $
+  whenmod 4 2 (const silence) $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+
+d'fx3 $ 3 ~> n "[0 1]/8" # s "duon"
+  # gain "0.9"
+
+d'nim $ (0.25 ~>) $
+  whenmod 4 2 (const silence) $
+  slow 16 . striate 256 $ n "[0 1]/2" # s "nimble"
+  # vowel "o"
+
+d'drum $ swing' $ stack [
+  n "[1*2, 0*8, [[~ 0] ~! [~!! 0] [~! 0!] ~!!]]/8" # s "drum",
+  every' 16 16 (const $ sound "kit:3") $
+  n "[~ 0]" # s "kit",
+  n "[~ [1 0/8 1/2 0/2]]/2" # s "hsn"
+  # gain "0.8"
+  ]
+
+msil [d'bass, d'bass2, d'hi, d'fx1, d'fx3]
+
+-- [5] battery 2
+
+d'perc $ cf $ s "uxay*2"
+  # n "1"
+
+d'nim silence
+d'perc $ b2'ux
+d'drum silence
+
+bpm 105
+bpm 121
+bpm 125
+
+d'perc $ b2'ux
+  # speed "[0.7 1 1.2]/2"
+
+d'drum $ cf $ b2'psr
+d'drum $ cf $ b2'psrf
+d'drum $ cf $ every 3 (0.125 <~) $ b2'psrf
+
+d'drum $ overlay (s "k") $
+  cf $ every 3 (0.125 <~) $ b2'psrf
+
+-- this and next 3 parts real quick
+d'perc $ b2'ux2 False
+
+d'drum $ cf $ -- overlay (s "k") $
+  every 3 (0.125 <~) $ b2'psrf
+
+d'tr $ cf $ b2'trump "[~ trump ! !] ~"
+
+d'tr $ cf $ b2'trump "[~ trump ! !] ~"
+  # speed (halfosc1 <$> slow 4 sinewave1)
+
+d'drum $ overlay (s "k") $
+  cf $ every 3 (0.125 <~) $ b2'psrf
+
+d'perc $ b2'ux2 True
+
+-- quickly
+d'bass $ b2'bass
+d'tr silence
+
+d'bass $ b2'bass
+  # shape "0.3" -- increase 0->0.3
+
+d'bass $ b2'bass
+  # shape (halfosc <$> saw1)
+
+--d'shard $ ((1%16) <~) $ shard'2
+d'fly $ fly'2
+
+d'arpy $ cf $ b2'arpy
+d'arpy $ cf $ iter 9 $ b2'arpy
+
+d'arpy $ cf $
+  whenmod 7 4 (|+| vowel "a") $ -- this not used in brighton 2014 live rec.
+  iter 9 $ b2'arpy
+
+msil [d'fly, d'perc]
+d'drum $ s "k/4"
+d'bass silence
+
+-- transition to [5b] battery 3
+
+d'perc $ cf $
+  slow 2 . spread slow [2,4,2,3] $
+  jux (0.25 <~) $ b1'perc
+  # n (density 3 $ run 2)
+
+d'drum $ overlay (s "k/4") $
+  cf $ b3'perc
+
+d'bass $ cf $ b3'bass
+
+d'bass $ cf $
+  whenmod 7 6 (density 1.5) $
+  b3'bass
+
+d'drum $ overlay (s "k/4") $
+  cf $ b3'perc
+  # n (slow 3 $ run 4)
+
+d'bass $ cf $
+  spread slow [2,(7%4)] $
+  whenmod 7 6 (density 1.5) $
+  b3'bass
+
+d'bass $ cf $
+  spread slow [2,(7%4)] $
+  whenmod 7 6 (density 1.5) $
+  iter 4 $
+  b3'bass
+
+d'hand $ b1'hand
+  # shape ((/2) <$> slow (10%4) sinewave1)
+  # pan (halfosc <$> slow (8%3) sinewave1)
+
+d'tac $ cf . whenmod 7 4 (density 1.5) $ b1'tac
+
+-- quickly
+d'arpy $ cf $ iter 9 $ b2'arpy
+msil [d'bass, d'hand]
+
+d'drum $ cf $
+  overlay (b3'drum) $
+  (b3'perc # n (slow 3 $ run 4))
+
+d'tac silence
+
+d'drum $ cf $
+  overlay (b3'drumf) $
+  (b3'perc # n (slow 3 $ run 4))
+
+d'ant $ ant'2
+d'bass2 $ bass'5f
+d'misc $ fly'2
+d'perc $ s "{wt/2, [~ wtsn]/8}"
+
+d'bass $ cf $
+  spread slow [2,(7%4)] $
+  whenmod 7 6 (density 1.5) $
+  iter 4 $
+  b3'bass
+
+d'perc $ snare43'1
+d'perc $ whenmod 5 3 rev $ snare43'1
+d'perc $ whenmod 5 3 (rev . chop 8) $ snare43'1
+d'perc $ overlay fly'1f $ whenmod 5 3 (rev . chop 8) $ snare43'1
+
+d'bass $ cf $
+  spread slow [2,(7%4)] $
+  whenmod 7 6 (density 1.5) $
+  iter 4 $
+  b3'bassf
+
+d'perc $ overlay fly'1f $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
+
+msil [d'ant, d'misc, d'perc]
+
+-- drum solo-ish for a bit
+d'drum $ cf $
+  overlay (b3'drumf) $
+  whenmod 5 3 (density 2) $
+  (b3'perc # n (slow 3 $ run 4))
+
+d'drum $ cf $
+  overlay (b3'drumf) $
+  whenmod 5 3 (density 2) $
+  iter 2 $
+  (b3'perc # n (slow 3 $ run 4))
+
+d'drum $ cf $
+  every' 8 8 rev $
+  overlay (b3'drumf) $
+  whenmod 5 3 (density 2) $
+  iter 2 $
+  (b3'perc # n (slow 3 $ run 4))
+
+d'drum $ cf $
+  every 3 rev $
+  every' 8 8 rev $
+  overlay (b3'drumf) $
+  whenmod 5 3 (density 2) $
+  iter 2 $
+  (b3'perc # n (slow 3 $ run 4))
+
+msil [d'bass, d'arpy, d'bass2]
+
+-- remove kick
+d'drum $ cf $
+  whenmod 5 3 (density 2) $
+  iter 2 $
+  (b3'perc # n (slow 3 $ run 4))
+
+d'perc $ cf $
+  slow 2 . spread slow [2,4,2,3] $
+  jux (0.25 <~) $ b1'perc
+  # n (density 3 $ run 2)
+
+d'bass $ slow 16 $ bass' 64
+d'misc $ (0.75 ~>) $ bass'4
+
+-- transition to [5c] piston viii
+bpm 125
+bpm 135
+bpm 138
+
+d'perc silence
+
+d'drum $ overlay (s "[k [sn ~ ~ k] [~ k*2] sn]/4")
+  $ cf $ (b3'perc # n (slow 3 $ run 4))
+
+d'misc $ overlay bass'5f $ (0.75 ~>) $ bass'4
+d'perc $ overlay fly'1f $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
+d'drum $ s "[k*2 [sn ~ ~ k] [k k*2] sn]/4"
+
+d'shard $ whenmod 7 3 (density (5%4)) $ plox'4 "[ice plode]*2"
+d'fly $ fly'5 True
+d'ant $ bass2'6
+d'cymb $ wtsn'6
+d'gnome $ gnome'6 5
+d'bz $ shard'3f
+d'gnome $ gnome'6 3
+d'bz $ within (0.5, 1) (density 2) $ shard'3f
+
+msil [d'fly,d'shard,d'bz,d'misc,d'cymb]
+d'misc $ (0.75 ~>) $ bass'4
+d'cymb $ (2.75 ~>) $ cymb'2 "0.7"
+msil [d'gnome,d'ant]
+d'bz $ every 3 brak $ bzox'4 "~ bzl"
+msil [d'bz,d'cymb,d'misc]
+
+solo $ d'perc $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
+
+hush
