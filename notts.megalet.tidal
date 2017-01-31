@@ -368,7 +368,7 @@ let d'drum = d1
     d'cymb = d9 -- !
     d'jbass = d10
     d'moog = d10
-    d'qs = d10
+    d'qs = d10 -- clashes with jbass
 
 -- custom lets for this performance to fix sample refs. see samples.csv
 
