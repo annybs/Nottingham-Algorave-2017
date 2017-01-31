@@ -195,7 +195,7 @@ d'drum $ cf $
 
 -- merge in a bit of [2c] piston iii
 d'bass2 $ bass'3 "o i" "1" True # gain "1.1"
-d'shard $ ((1%16) <~) $ shard'2
+-- (?) d'shard $ ((1%16) <~) $ shard'2
 
 d'perc $ cf $
   slow 2 . spread slow [2,4,2,3] $
