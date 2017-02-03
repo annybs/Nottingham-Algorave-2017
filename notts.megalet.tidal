@@ -352,6 +352,7 @@ let d'drum = d1
     d'arpy = d7
     d'pc = d7
     d'shard = d7
+    d'qs = d7
     d'arm = d8
     d'misc = d8
     d'pcl = d8
@@ -368,7 +369,6 @@ let d'drum = d1
     d'cymb = d9 -- !
     d'jbass = d10
     d'moog = d10
-    d'qs = d10 -- clashes with jbass
 
 -- custom lets for this performance to fix sample refs. see samples.csv
 

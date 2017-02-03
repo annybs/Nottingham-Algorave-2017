@@ -4,8 +4,8 @@ setlist:
   - piston vi
   - raise - battery 1 - piston iii
   - juliese
-  - haddeo (algorave remix)
   - battery 2 - battery 3 - piston viii
+  - haddeo (algorave remix)
 -}
 
 let bpm b = cps (b/60)
@@ -71,6 +71,12 @@ d'cymb silence
 d'drum $ overlay (cf $ pn'hh) $ drum'6
 d'casio $ cf $ s "casio*2 ~"
 
+d'bass $ bass'5
+
+d'qs $ cf $
+  jux (iter 8) $ pn'qs 2
+  # gain "0.95"
+
 d'mons $ cf $
   striate 4 $ slow 2 $ s "monsterb"
   # gain "0.7"
@@ -81,12 +87,6 @@ d'mons $ cf $
   striate 4 $ slow 2 $ s "monsterb"
   # gain "0.7"
   # speed ((+0.6).(/2) <$> slow 4 sinewave1)
-
-d'bass $ bass'5
-
-d'qs $ cf $
-  jux (iter 8) $ pn'qs 2
-  # gain "0.95"
 
 d'bass $ every 2 (density 2) $ bass'5
 
@@ -120,7 +120,14 @@ d'jbass $ slow 8 $ sound "jungbass jungbass:1"
   # pan (slow 2 sinewave1)
   # speed "1.2"
 
+d'qs $ cf $
+  spread density [1,1,0.5,2] $
+  jux (iter 8) $ pn'qs 2
+  # speed ((+1.2).(/2) <$> slow 3.2 triwave1)
+  # gain "0.95"
+
 -- transition to [2b] battery 1
+d'qs silence
 d'hand $ b1'hand
 
 d'fly $ fly'5 True
@@ -164,8 +171,8 @@ d'bass $ cf $
 d'drum $ cf $ overlay (pn'sn) $ pn'hh
 d'tac $ cf $ b1'tac
 
+-- quickly
 d'tac $ cf . whenmod 7 4 (density 1.5) $ b1'tac
-
 d'drum $ cf $ overlay (sound "[~ psn:1]") $ pn'hh
 
 d'perc $ cf $
@@ -187,7 +194,7 @@ d'cymb $ (0.5 <~) $ cymb'2 "0.7"
 
 -- merge in a bit of [2c] piston iii
 d'bass2 $ bass'3 "o i" "1" True # gain "1"
--- (?) d'shard $ ((1%16) <~) $ shard'2
+d'misc $ bass2'3
 
 d'drum $ cf $
   overlay (
@@ -222,10 +229,10 @@ d'bass2 $ bass'3 "o i" "1" True # gain "1.1"
 d'drum $ cf $ every' 8 8 (density 1.5) $ every 2 (density 3) $ sound "[~ psn:1]"
 
 msil [d'hand, d'bz, d'bass, d'bass2, d'cymb]
-d'shard silence
 
 -- [3] juliese
 
+d'misc silence
 d'bass $ bassbass
 
 bpm 125
@@ -348,23 +355,259 @@ d'gt $ density 0.98 $ gt
 mapM_ ($ silence) [d'eg, d'wbass]
 d'drum $ ju'drum2
 
-mapM_ ($ silence) [d'bass, d'udu, d'pc]
-mapM_ ($ silence) [d'gt]
+mapM_ ($ silence) [d'bass, d'udu, d'pc, d'perc]
 
--- [4] haddeo (algorave remix)
+-- [4] battery 2
+
+d'perc $ cf $ s "uxay*2"
+  # n "1"
 
 bpm 99
-bpm 104
+bpm 105
+bpm 125
+
+mapM_ ($ silence) [d'gt, d'drum]
+
+d'perc $ b2'ux
+
+d'perc $ b2'ux
+  # speed "[0.7 1 1.2]/2"
+
+d'drum $ cf $ b2'psr
+d'drum $ cf $ b2'psrf
+d'drum $ cf $ every 3 (0.125 <~) $ b2'psrf
+
+d'drum $ overlay (s "k") $
+  cf $ every 3 (0.125 <~) $ b2'psrf
+
+-- this and next 3 parts real quick
+d'perc $ b2'ux2 False
+
+d'drum $ cf $ -- overlay (s "k") $
+  every 3 (0.125 <~) $ b2'psrf
+
+d'tr $ cf $ b2'trump "[~ trump ! !] ~"
+
+d'tr $ cf $ b2'trump "[~ trump ! !] ~"
+  # speed (halfosc1 <$> slow 4 sinewave1)
+
+d'drum $ overlay (s "k") $
+  cf $ every 3 (0.125 <~) $ b2'psrf
+
+d'perc $ b2'ux2 True
+
+-- quickly
+d'bass $ b2'bass
+d'tr silence
+
+d'bass $ b2'bass
+  # shape "0.3" -- increase 0->0.3
+
+d'bass $ b2'bass
+  # shape (halfosc <$> saw1)
+
+--d'shard $ ((1%16) <~) $ shard'2
+d'misc $ fly'2
+
+d'arpy $ cf $ b2'arpy
+d'arpy $ cf $ iter 9 $ b2'arpy
+
+d'arpy $ cf $
+  whenmod 7 4 (|+| vowel "a") $ -- this not used in brighton 2014 live rec.
+  iter 9 $ b2'arpy
+
+msil [d'misc, d'perc]
+d'drum $ s "k/4"
+d'bass silence
+
+-- transition to [4b] battery 3
+
+d'fly $ fly'7
+  # orbit "2"
+  # delay "0.6"
+  # delayfeedback "0.4"
+  # delaytime "0.62" --(112/60)/3
+
+d'perc $ cf $
+  slow 2 . spread slow [2,4,2,3] $
+  jux (0.25 <~) $ b1'perc
+  # n (density 3 $ run 2)
+
+d'drum $ overlay (s "k/4") $
+  cf $ b3'perc
+
+d'bass $ cf $ b3'bass
+
+d'bass $ cf $
+  whenmod 7 6 (density 1.5) $
+  b3'bass
+
+d'drum $ overlay (s "k/4") $
+  cf $ b3'perc
+  # n (slow 3 $ run 4)
+
+d'bass $ cf $
+  spread slow [2,(7%4)] $
+  whenmod 7 6 (density 1.5) $
+  b3'bass
+
+d'bass $ cf $
+  spread slow [2,(7%4)] $
+  whenmod 7 6 (density 1.5) $
+  iter 4 $
+  b3'bass
+
+d'hand $ b1'hand
+  # shape ((/2) <$> slow (10%4) sinewave1)
+  # pan (halfosc <$> slow (8%3) sinewave1)
+
+d'tac $ cf . whenmod 7 4 (density 1.5) $ b1'tac
+
+-- quickly
+d'arpy $ cf $ iter 9 $ b2'arpy
+msil [d'bass, d'hand, d'fly]
+
+d'drum $ cf $
+  overlay (b3'drum) $
+  (b3'perc # n (slow 3 $ run 4))
+
+d'tac silence
+
+d'drum $ cf $
+  overlay (b3'drumf) $
+  (b3'perc # n (slow 3 $ run 4))
+
+d'ant $ ant'2
+d'misc $ fly'2
+d'bass2 $ bass'5f
+
+d'bass $ cf $
+  spread slow [2,(7%4)] $
+  whenmod 7 6 (density 1.5) $
+  iter 4 $
+  b3'bass
+
+d'perc $ s "{wt/2, [~ wtsn]/8}"
+
+d'perc $ snare43'1
+d'perc $ whenmod 5 3 rev $ snare43'1
+d'perc $ whenmod 5 3 (rev . chop 8) $ snare43'1
+d'perc $ overlay fly'1f $ whenmod 5 3 (rev . chop 8) $ snare43'1
+
+d'bass $ cf $
+  spread slow [2,(7%4)] $
+  whenmod 7 6 (density 1.5) $
+  iter 4 $
+  b3'bassf
+
+d'perc $ overlay fly'1f $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
+
+d'arpy $ cf $
+  whenmod 7 4 (|+| vowel "a") $ -- this not used in brighton 2014 live rec.
+  iter 9 $ b2'arpy
+
+msil [d'ant, d'misc, d'perc]
+
+-- drum solo-ish for a bit
+d'drum $ cf $
+  overlay (b3'drumf) $
+  whenmod 5 3 (density 2) $
+  (b3'perc # n (slow 3 $ run 4))
+
+d'drum $ cf $
+  overlay (b3'drumf) $
+  whenmod 5 3 (density 2) $
+  iter 2 $
+  (b3'perc # n (slow 3 $ run 4))
+
+d'drum $ cf $
+  every' 8 8 rev $
+  overlay (b3'drumf) $
+  whenmod 5 3 (density 2) $
+  iter 2 $
+  (b3'perc # n (slow 3 $ run 4))
+
+d'drum $ cf $
+  every 3 rev $
+  every' 8 8 rev $
+  overlay (b3'drumf) $
+  whenmod 5 3 (density 2) $
+  iter 2 $
+  (b3'perc # n (slow 3 $ run 4))
+
+msil [d'bass, d'arpy, d'bass2]
+
+-- remove kick
+d'drum $ cf $
+  whenmod 5 3 (density 2) $
+  iter 2 $
+  (b3'perc # n (slow 3 $ run 4))
+
+d'perc $ cf $
+  slow 2 . spread slow [2,4,2,3] $
+  jux (0.25 <~) $ b1'perc
+  # n (density 3 $ run 2)
+
+d'bass $ slow 16 $ bass' 64
+d'misc $ (0.75 ~>) $ bass'4
+
+-- transition to [4c] piston viii
+bpm 125
+bpm 135
+bpm 138
+
+d'perc silence
+
+d'drum $ overlay (s "[k [sn ~ ~ k] [~ k*2] sn]/4")
+  $ cf $ (b3'perc # n (slow 3 $ run 4))
+
+d'perc $ overlay fly'1f $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
+
+d'misc $ overlay bass'5f $ (0.75 ~>) $ bass'4
+
+d'drum $ s "[k*2 [sn ~ ~ k] [k k*2] sn]/4"
+
+d'shard $ whenmod 7 3 (density (5%4)) $ plox'4 "[ice plode]*2"
+d'fly $ fly'5 True
+d'ant $ bass2'6
+d'cymb $ wtsn'6
+d'gnome $ gnome'6 5
+d'bz $ shard'3f
+d'gnome $ gnome'6 3
+
+-- quickly
+d'drum $ s "[[k*2 k] [sn ~ ~ k] [k k*2] sn]/4"
+
+d'bass $ cf $
+  spread slow [2,(7%4)] $
+  whenmod 7 6 (density 1.5) $
+  iter 4 $
+  b3'bass
+
+d'bz $ within (0.5, 1) (density 2) $ shard'3f
+
+msil [d'fly,d'shard,d'bz,d'misc,d'cymb]
+d'misc $ (0.75 ~>) $ bass'4
+d'cymb $ (2.75 ~>) $ cymb'2 "0.7"
+msil [d'gnome,d'ant]
+d'bz $ every 3 brak $ bzox'4 "~ bzl"
+msil [d'bz,d'cymb,d'misc]
+
+solo $ d'perc $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
+
+-- [5] haddeo (algorave remix)
+
+bpm 135
+bpm 110
 bpm 105
 
 -- pt 1: intro
 
-d'perc $ iter 4 $ (# pan (density 16 "0.25 0.75")) $ whenmod 16 15 (density 3) $ hhb True
-  # gain "0.7"
-
-solo $ d'drum $ stack [
+d'drum $ stack [
   n "1/4" # s "drum"
   ]
+
+d'perc silence
 
 d'wax $ slow 16 . striate 256 $ s "icarus"
 
@@ -655,224 +898,3 @@ d'drum $ swing' $ stack [
 
 msil [d'bass, d'bass2, d'hi, d'fx1, d'fx3]
 
--- [5] battery 2
-
-d'perc $ cf $ s "uxay*2"
-  # n "1"
-
-d'nim silence
-d'perc $ b2'ux
-d'drum silence
-
-bpm 105
-bpm 123
-bpm 125
-
-d'perc $ b2'ux
-  # speed "[0.7 1 1.2]/2"
-
-d'drum $ cf $ b2'psr
-d'drum $ cf $ b2'psrf
-d'drum $ cf $ every 3 (0.125 <~) $ b2'psrf
-
-d'drum $ overlay (s "k") $
-  cf $ every 3 (0.125 <~) $ b2'psrf
-
--- this and next 3 parts real quick
-d'perc $ b2'ux2 False
-
-d'drum $ cf $ -- overlay (s "k") $
-  every 3 (0.125 <~) $ b2'psrf
-
-d'tr $ cf $ b2'trump "[~ trump ! !] ~"
-
-d'tr $ cf $ b2'trump "[~ trump ! !] ~"
-  # speed (halfosc1 <$> slow 4 sinewave1)
-
-d'drum $ overlay (s "k") $
-  cf $ every 3 (0.125 <~) $ b2'psrf
-
-d'perc $ b2'ux2 True
-
--- quickly
-d'bass $ b2'bass
-d'tr silence
-
-d'bass $ b2'bass
-  # shape "0.3" -- increase 0->0.3
-
-d'bass $ b2'bass
-  # shape (halfosc <$> saw1)
-
---d'shard $ ((1%16) <~) $ shard'2
-d'fly $ fly'2
-
-d'arpy $ cf $ b2'arpy
-d'arpy $ cf $ iter 9 $ b2'arpy
-
-d'arpy $ cf $
-  whenmod 7 4 (|+| vowel "a") $ -- this not used in brighton 2014 live rec.
-  iter 9 $ b2'arpy
-
-msil [d'fly, d'perc]
-d'drum $ s "k/4"
-d'bass silence
-
--- transition to [5b] battery 3
-
-d'perc $ cf $
-  slow 2 . spread slow [2,4,2,3] $
-  jux (0.25 <~) $ b1'perc
-  # n (density 3 $ run 2)
-
-d'drum $ overlay (s "k/4") $
-  cf $ b3'perc
-
-d'bass $ cf $ b3'bass
-
-d'bass $ cf $
-  whenmod 7 6 (density 1.5) $
-  b3'bass
-
-d'drum $ overlay (s "k/4") $
-  cf $ b3'perc
-  # n (slow 3 $ run 4)
-
-d'bass $ cf $
-  spread slow [2,(7%4)] $
-  whenmod 7 6 (density 1.5) $
-  b3'bass
-
-d'bass $ cf $
-  spread slow [2,(7%4)] $
-  whenmod 7 6 (density 1.5) $
-  iter 4 $
-  b3'bass
-
-d'hand $ b1'hand
-  # shape ((/2) <$> slow (10%4) sinewave1)
-  # pan (halfosc <$> slow (8%3) sinewave1)
-
-d'tac $ cf . whenmod 7 4 (density 1.5) $ b1'tac
-
--- quickly
-d'arpy $ cf $ iter 9 $ b2'arpy
-msil [d'bass, d'hand]
-
-d'drum $ cf $
-  overlay (b3'drum) $
-  (b3'perc # n (slow 3 $ run 4))
-
-d'tac silence
-
-d'drum $ cf $
-  overlay (b3'drumf) $
-  (b3'perc # n (slow 3 $ run 4))
-
-d'ant $ ant'2
-d'bass2 $ bass'5f
-d'misc $ fly'2
-d'perc $ s "{wt/2, [~ wtsn]/8}"
-
-d'bass $ cf $
-  spread slow [2,(7%4)] $
-  whenmod 7 6 (density 1.5) $
-  iter 4 $
-  b3'bass
-
-d'perc $ snare43'1
-d'perc $ whenmod 5 3 rev $ snare43'1
-d'perc $ whenmod 5 3 (rev . chop 8) $ snare43'1
-d'perc $ overlay fly'1f $ whenmod 5 3 (rev . chop 8) $ snare43'1
-
-d'bass $ cf $
-  spread slow [2,(7%4)] $
-  whenmod 7 6 (density 1.5) $
-  iter 4 $
-  b3'bassf
-
-d'perc $ overlay fly'1f $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
-
-d'arpy $ cf $
-  whenmod 7 4 (|+| vowel "a") $ -- this not used in brighton 2014 live rec.
-  iter 9 $ b2'arpy
-
-msil [d'ant, d'misc, d'perc]
-
--- drum solo-ish for a bit
-d'drum $ cf $
-  overlay (b3'drumf) $
-  whenmod 5 3 (density 2) $
-  (b3'perc # n (slow 3 $ run 4))
-
-d'drum $ cf $
-  overlay (b3'drumf) $
-  whenmod 5 3 (density 2) $
-  iter 2 $
-  (b3'perc # n (slow 3 $ run 4))
-
-d'drum $ cf $
-  every' 8 8 rev $
-  overlay (b3'drumf) $
-  whenmod 5 3 (density 2) $
-  iter 2 $
-  (b3'perc # n (slow 3 $ run 4))
-
-d'drum $ cf $
-  every 3 rev $
-  every' 8 8 rev $
-  overlay (b3'drumf) $
-  whenmod 5 3 (density 2) $
-  iter 2 $
-  (b3'perc # n (slow 3 $ run 4))
-
-msil [d'bass, d'arpy, d'bass2]
-
--- remove kick
-d'drum $ cf $
-  whenmod 5 3 (density 2) $
-  iter 2 $
-  (b3'perc # n (slow 3 $ run 4))
-
-d'perc $ cf $
-  slow 2 . spread slow [2,4,2,3] $
-  jux (0.25 <~) $ b1'perc
-  # n (density 3 $ run 2)
-
-d'bass $ slow 16 $ bass' 64
-d'misc $ (0.75 ~>) $ bass'4
-
--- transition to [5c] piston viii
-bpm 125
-bpm 134
-bpm 138
-
-d'perc silence
-
-d'drum $ overlay (s "[k [sn ~ ~ k] [~ k*2] sn]/4")
-  $ cf $ (b3'perc # n (slow 3 $ run 4))
-
-d'misc $ overlay bass'5f $ (0.75 ~>) $ bass'4
-d'perc $ overlay fly'1f $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
-
-d'drum $ s "[k*2 [sn ~ ~ k] [k k*2] sn]/4"
-
-d'shard $ whenmod 7 3 (density (5%4)) $ plox'4 "[ice plode]*2"
-d'fly $ fly'5 True
-d'ant $ bass2'6
-d'cymb $ wtsn'6
-d'gnome $ gnome'6 5
-d'bz $ shard'3f
-d'gnome $ gnome'6 3
-d'bz $ within (0.5, 1) (density 2) $ shard'3f
-
-msil [d'fly,d'shard,d'bz,d'misc,d'cymb]
-d'misc $ (0.75 ~>) $ bass'4
-d'cymb $ (2.75 ~>) $ cymb'2 "0.7"
-msil [d'gnome,d'ant]
-d'bz $ every 3 brak $ bzox'4 "~ bzl"
-msil [d'bz,d'cymb,d'misc]
-
-solo $ d'perc $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
-
-hush
