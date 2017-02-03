@@ -1,10 +1,9 @@
 {-
 anny @ notts algorave 2017
 setlist:
-  - piston vi
-  - raise - battery 1 - piston iii
+  - piston vi/raise/battery 1/piston iii
   - juliese
-  - battery 2 - battery 3 - piston viii
+  - battery 2/battery 3/piston viii
   - haddeo (algorave remix)
 -}
 
@@ -127,8 +126,8 @@ d'qs $ cf $
   # gain "0.95"
 
 -- transition to [2b] battery 1
-d'qs silence
 d'hand $ b1'hand
+d'qs silence
 
 d'fly $ fly'5 True
 
@@ -217,7 +216,7 @@ d'perc $ cf $
 d'misc $ bass2'3
 d'warb $ b1'warbler
 
-d'bass2 $ bass'3 "o i" "0" True # gain "1.1"
+d'bass2 $ bass'3 "o i" "0" True # gain "1"
 
 d'drum $ cf $
   overlay (
@@ -227,7 +226,7 @@ d'drum $ cf $
     ) $
   pn'hh
 
-d'bass2 $ bass'3 "o i" "1" True # gain "1.1"
+d'bass2 $ bass'3 "o i" "1" True # gain "1"
 
 d'drum $ cf $ every' 8 8 (density 1.5) $ every 2 (density 3) $ sound "[~ psn:1]"
 
@@ -365,7 +364,7 @@ d'perc $ cf $ s "uxay*2"
   # n "1"
 
 bpm 99
-bpm 105
+bpm 120
 bpm 125
 
 mapM_ ($ silence) [d'gt, d'drum]
@@ -483,6 +482,10 @@ d'ant $ ant'2
 d'bass2 $ bass'5f
 d'misc $ fly'2
 
+d'hand $ b1'hand
+  # shape ((/2) <$> slow (10%4) sinewave1)
+  # pan (halfosc <$> slow (8%3) sinewave1)
+
 d'bass $ cf $
   spread slow [2,(7%4)] $
   whenmod 7 6 (density 1.5) $
@@ -507,7 +510,7 @@ d'bass $ cf $
   iter 4 $
   b3'bassf
 
-msil [d'ant, d'misc, d'perc]
+msil [d'ant, d'misc, d'perc, d'hand]
 
 -- drum solo-ish for a bit
 d'drum $ cf $
@@ -583,6 +586,7 @@ msil [d'gnome,d'ant]
 d'bz $ every 3 brak $ bzox'4 "~ bzl"
 msil [d'bz,d'cymb,d'misc,d'bass]
 
+-- d'bass is awol at this point? @todo
 solo $ d'perc $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
 
 -- [5] haddeo (algorave remix)
