@@ -53,19 +53,18 @@ d'drum $ overlay sn'6 $ drum'6
 
 msil [d'perc,d'fly,d'bz]
 
--- [2] pigs nose: raise
+-- [1b] pigs nose: raise
 bpm 138
 bpm 120
 bpm 117
 
 msil [d'gnome, d'bass]
 d'drum $ drum'6
+d'cymb silence
 
 d'ql $ slow (10%4) $ spread density [1,5%4] $
   sound "[qlatibro:1 qlatibro]*2"
   # vowel "e"
-
-d'cymb silence
 
 d'drum $ overlay (cf $ pn'hh) $ drum'6
 d'casio $ cf $ s "casio*2 ~"
@@ -125,7 +124,7 @@ d'qs $ cf $
   # speed ((+1.2).(/2) <$> slow 3.2 triwave1)
   # gain "0.95"
 
--- transition to [2b] battery 1
+-- transition to [1c] battery 1
 d'hand $ b1'hand
 d'qs silence
 
@@ -192,7 +191,7 @@ msil [d'tac, d'bass]
 
 d'cymb $ (0.5 <~) $ cymb'2 "0.7"
 
--- merge in a bit of [2c] piston iii
+-- merge in a bit of [1d] piston iii
 d'bass2 $ bass'3 "o i" "1" True # gain "1"
 
 d'drum $ cf $
@@ -232,13 +231,13 @@ d'drum $ cf $ every' 8 8 (density 1.5) $ every 2 (density 3) $ sound "[~ psn:1]"
 
 msil [d'hand, d'bz, d'bass, d'bass2, d'cymb]
 
--- [3] juliese
-
-d'bass $ bassbass
+-- [2] juliese
 
 bpm 125
 bpm 105
 bpm 99
+
+d'bass $ bassbass
 
 d'drum silence
 msil [d'perc, d'warb, d'misc]
@@ -358,7 +357,7 @@ d'drum $ ju'drum2
 
 mapM_ ($ silence) [d'bass, d'udu, d'pc, d'perc]
 
--- [4] battery 2
+-- [3] battery 2
 
 d'perc $ cf $ s "uxay*2"
   # n "1"
@@ -418,7 +417,7 @@ msil [d'misc, d'perc]
 d'drum $ s "k/4"
 d'bass silence
 
--- transition to [4b] battery 3
+-- transition to [3b] battery 3
 
 d'fly $ fly'7
   # orbit "2"
@@ -469,28 +468,22 @@ d'drum $ cf $
   overlay (b3'drum) $
   (b3'perc # n (slow 3 $ run 4))
 
+-- quickly
+d'arpy silence
 d'shard $ whenmod 7 3 (density (5%4)) $ plox'4 "[ice plode]*2"
-
-msil [d'tac, d'shard]
 
 d'drum $ cf $
   overlay (b3'drumf) $
   (b3'perc # n (slow 3 $ run 4))
 
-d'ant $ ant'2
-
 d'bass2 $ bass'5f
-d'misc $ fly'2
+--d'arpy $ cf $ iter 9 $ b2'arpy
 
 d'hand $ b1'hand
   # shape ((/2) <$> slow (10%4) sinewave1)
   # pan (halfosc <$> slow (8%3) sinewave1)
 
-d'bass $ cf $
-  spread slow [2,(7%4)] $
-  whenmod 7 6 (density 1.5) $
-  iter 4 $
-  b3'bass
+d'fly $ fly'2
 
 d'perc $ s "{wt/2, [~ wtsn]/8}"
 
@@ -508,9 +501,15 @@ d'bass $ cf $
   spread slow [2,(7%4)] $
   whenmod 7 6 (density 1.5) $
   iter 4 $
+  b3'bass
+
+d'bass $ cf $
+  spread slow [2,(7%4)] $
+  whenmod 7 6 (density 1.5) $
+  iter 4 $
   b3'bassf
 
-msil [d'ant, d'misc, d'perc, d'hand]
+msil [d'ant, d'fly, d'perc, d'hand, d'shard, d'tac]
 
 -- drum solo-ish for a bit
 d'drum $ cf $
@@ -547,7 +546,7 @@ d'drum $ cf $
   iter 2 $
   (b3'perc # n (slow 3 $ run 4))
 
--- transition to [4c] piston viii
+-- transition to [3c] piston viii
 d'bass $ slow 16 $ bass' 64
 
 d'perc $ overlay fly'1f $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
@@ -584,12 +583,11 @@ d'misc $ (0.75 ~>) $ bass'4
 d'cymb $ (2.75 ~>) $ cymb'2 "0.7"
 msil [d'gnome,d'ant]
 d'bz $ every 3 brak $ bzox'4 "~ bzl"
-msil [d'bz,d'cymb,d'misc,d'bass]
+msil [d'bz,d'cymb,d'misc]
 
--- d'bass is awol at this point? @todo
 solo $ d'perc $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
 
--- [5] haddeo (algorave remix)
+-- [4] haddeo (algorave remix)
 
 bpm 135
 bpm 110
