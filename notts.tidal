@@ -60,11 +60,12 @@ bpm 117
 
 msil [d'gnome, d'bass]
 d'drum $ drum'6
-d'cymb silence
 
 d'ql $ slow (10%4) $ spread density [1,5%4] $
   sound "[qlatibro:1 qlatibro]*2"
   # vowel "e"
+
+d'cymb silence
 
 d'drum $ overlay (cf $ pn'hh) $ drum'6
 d'casio $ cf $ s "casio*2 ~"
@@ -194,6 +195,10 @@ d'cymb $ (0.5 <~) $ cymb'2 "0.7"
 -- merge in a bit of [1d] piston iii
 d'bass2 $ bass'3 "o i" "1" True # gain "1"
 
+d'bass $ slow 4 $ b1'bass
+  # n "0 1 0 0"
+  # speed (thirdosc1 <$> slow 8 sinewave1)
+
 d'drum $ cf $
   overlay (
     every' 8 8 (density 1.5) $
@@ -202,10 +207,6 @@ d'drum $ cf $
     ) $
   overlay (pn'hh) $
   every 4 (brak . density 2) $ s "k(3,8)"
-
-d'bass $ slow 4 $ b1'bass
-  # n "0 1 0 0"
-  # speed (thirdosc1 <$> slow 8 sinewave1)
 
 d'perc $ cf $
   slow 2 . spread slow [2,4,2,3] $
@@ -485,23 +486,15 @@ d'hand $ b1'hand
 
 d'fly $ fly'2
 
-d'perc $ s "{wt/2, [~ wtsn]/8}"
-
-d'perc $ snare43'1
-d'perc $ whenmod 5 3 rev $ snare43'1
-d'perc $ whenmod 5 3 (rev . chop 8) $ snare43'1
-d'perc $ overlay fly'1f $ whenmod 5 3 (rev . chop 8) $ snare43'1
-d'perc $ overlay fly'1f $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
-
-d'arpy $ cf $
-  whenmod 7 4 (|+| vowel "a") $ -- this not used in brighton 2014 live rec.
-  iter 9 $ b2'arpy
-
 d'bass $ cf $
   spread slow [2,(7%4)] $
   whenmod 7 6 (density 1.5) $
   iter 4 $
   b3'bass
+
+d'arpy $ cf $
+  whenmod 7 4 (|+| vowel "a") $ -- this not used in brighton 2014 live rec.
+  iter 9 $ b2'arpy
 
 d'bass $ cf $
   spread slow [2,(7%4)] $
@@ -549,11 +542,18 @@ d'drum $ cf $
 -- transition to [3c] piston viii
 d'bass $ slow 16 $ bass' 64
 
-d'perc $ overlay fly'1f $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
+d'perc $ s "{wt/2, [~ wtsn]/8}"
+
+d'perc $ snare43'1
+d'perc $ whenmod 5 3 rev $ snare43'1
+d'perc $ whenmod 5 3 (rev . chop 8) $ snare43'1
+d'perc $ overlay fly'1f $ whenmod 5 3 (rev . chop 8) $ snare43'1
 
 bpm 125
 bpm 135
 bpm 138
+
+d'perc $ overlay fly'1f $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
 
 d'drum $ overlay (s "[k [sn ~ ~ k] [~ k*2] sn]/4") $
   cf $ b3'perc # n (slow 3 $ run 4)
