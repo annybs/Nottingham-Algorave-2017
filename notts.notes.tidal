@@ -1,0 +1,183 @@
+{-
+p6 ~1a~ @ 138
+-}
+d'bass $ bass'6
+
+d'bz $ bass2'6
+
+d'fly $ plode'6
+
+d'cymb $ density (5%4) $ whenmod 9 4 (density 1.5) $ cymb'6
+
+d'perc $ wt'2 # gain "0.85"
+
+d'drum $ overlay sn'6 $ drum'6
+
+d'misc $ slow 16 $ bass' 64
+
+d'gnome $ wtsn'6
+
+d'bass $ (0.6 ~>) $ bass'4
+
+msil [d'perc,d'gnome,d'misc]
+
+d'gnome $ gnome'6 5 -- then 3
+
+msil [d'drum,d'fly,d'bz,d'cymb]
+
+d'drum $ sound "[[k k:1]*2 [sn k:1 ~ k] [~ k:1 k ~] [~ sn ~ k]]/8"
+
+d'fly $ fly'5 False
+
+d'cymb $ (0.5 <~) $ cymb'2 "0.7"
+
+msil [d'perc,d'fly,d'bz]
+
+{-
+r ~1b~ @ 117
+-}
+msil [d'gnome, d'bass]
+
+d'ql $ slow (10%4) $ spread density [1,5%4] $
+  sound "[qlatibro:1 qlatibro]*2"
+  # vowel "e"
+
+d'cymb silence
+
+d'drum $ overlay (cf $ pn'hh) $ drum'6
+
+d'casio $ cf $ s "casio*2 ~"
+
+d'bass $ every 2 (density 2) $ bass'5
+
+d'qs $ cf $
+  spread density [1,1,2,0.5] $ -- (2) & (3) [1,1,0.5,2]
+  jux (iter 8) $ pn'qs 2
+  # speed ((+0.7).(/2) <$> slow 3.2 triwave1) -- (1) & later, +1.2
+  # gain "0.95"
+
+d'mons $ cf $
+  spread density [1,2] $ -- (1)
+  striate 4 $ slow 2 $ s "monsterb"
+  # gain "0.7"
+  # speed ((+0.6).(/2) <$> slow 4 sinewave1)
+
+d'drum $ cf $ overlay (pn'sn) $ overlay (pn'hh) $
+  s "k(3,8)"
+
+d'jbass $ slow 8 $ sound "jungbass jungbass:1"
+  # pan (slow 2 sinewave1)
+  # speed "1.2"
+
+{-
+b1 ~1c~ @ 125
+-}
+d'hand $ b1'hand
+  # shape ((/2) <$> slow (10%4) sinewave1) -- (1)
+  # pan (halfosc <$> slow (8%3) sinewave1) -- (2)
+
+d'qs silence
+
+d'fly $ fly'5 True
+
+d'bass $ slow 4 $ b1'bass
+  # n "0 1 0 0"
+  # speed (thirdosc1 <$> slow 8 sinewave1)
+
+d'perc $ cf $
+  -- slow 2 . spread slow [2,4,2,3] $ -- (4) replacing (3)
+  spread slow [2,1] $ -- (3) after ++bpm
+  jux (0.25 <~) $ -- (2)
+  b1'perc
+  # n (density 3 $ run 2) -- (1)
+
+msil [d'fly, d'casio, d'jbass]
+
+d'bass $ cf $
+  spread slow [1,3] $
+  striate 16 $
+  b1'bass
+  # n "0 1 0 0"
+  # speed (halfosc1 <$> slow 8 sinewave1)
+  # gain "0.9"
+
+d'tac $ cf . whenmod 7 4 (density 1.5) $ b1'tac
+
+d'drum $ cf $
+  overlay (
+    every' 8 8 (density 1.5) $
+    every 2 (density 3) $
+    sound "[~ psn:1]"
+    ) $
+  overlay (pn'hh) $
+  every 4 (brak . density 2) $ s "k(3,8)"
+
+msil [d'tac, d'bass]
+
+d'cymb $ (0.5 <~) $ cymb'2 "0.7"
+
+d'bass2 $ bass'3 "o i" "1" True # gain "1" -- "0"
+d'misc $ bass2'3
+d'warb $ b1'warbler
+
+msil [d'hand, d'bz, d'bass, d'bass2, d'cymb]
+
+{-
+j ~2~ @ 99
+-}
+d'bass $
+  slowspread (\x -> within (0.5, 1) (x)) [id, slow 2 . brak] $ -- (4) later
+  whenmod 4 2 (density 3) $ -- (3)
+  whenmod 3 2 (slow 2) $ -- (2)
+  bassbass -- (1) bassbass'
+
+d'drum $ overlay ((1 ~>) $ s "cy/8") $ -- (3) briefly
+  overlay ((0.5 ~>) $ s "rsn/2") $ -- (2)
+  morek $ -- (1)
+  every' 12 2 (density 3) $ -- (4)
+  s "k"
+
+d'perc $ iter 4 $ -- (4)
+  (# pan (density 16 "0.25 0.75")) $ -- (3)
+  whenmod 16 15 (density 3) $ -- (1)
+  hhb False -- (2) True
+
+d'udu $ (every' 5 3 $ brak) $ -- (3)
+  (every' 3 2 . sometimesBy 0.5 $ density (4%3)) $ -- (1)
+  (whenmod 7 5 $ trunc (5%6)) $ -- (2)
+  ududu
+
+d'wbass $
+  (sometimesBy 0.6 $ superimpose (rev . slow (5%4))) $ -- (6)
+  every' 4 4 (0.32 ~>) $
+  chop 16 $
+  -- sound "[wb wb:1 ~ ~]/4" -- (1) initial
+  -- sound "[wb [wb:1 wb:2] ~ ~]/4" -- (2)
+  -- sound "[wb [wb:1 wb:2] ~ [wb:1 wb:2]]/4" -- (3)
+  sound "[wb [wb:1 wb:2] ~ [[wb:1 wb:1/2] wb:2]]/4" -- (5)
+  # gain "0.9"
+  # speed "[1 1 2]/3" -- (4)
+
+d'eg $ (0.18 <~) $ every 2 (const silence) $ -- (5) then (6) w/o silence
+  (# speed ((+0.8).(/2) <$> slow 4 saw1)) $ -- (2)
+  density 0.25 $ -- (3) 0.245
+  slowspread density [1, 2, 0.5, 2] $ -- (1)
+  eg
+  # gain "0.8"
+
+mapM_ ($ silence) [d'perc, d'bass]
+
+d'pc $ whenmod 7 5 (density 1.25) $ -- (3)
+  slowspread ($) [rev, id, brak, (0.25 ~>), id] $ -- (2)
+  slowspread (\x -> within x (slow 1.5)) [(0.25, 0.5), (0.75, 1), (0.25, 0.75)] $ -- (1)
+  pcbeep
+
+d'gt $ density 0.98 $ -- (2)
+  gt
+  # gain "0.87"
+  # speed ((+1).(/4) <$> slow 1.95 sinewave1) -- (1)
+
+mapM_ ($ silence) [d'eg, d'wbass]
+d'drum $ ju'drum2
+mapM_ ($ silence) [d'bass, d'udu, d'pc, d'perc]
+
