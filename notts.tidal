@@ -473,22 +473,22 @@ d'tac $ cf $ cf . whenmod 7 4 (density 1.5) $ b1'tac
 
 -- quickly
 d'arpy $ cf $ iter 9 $ b2'arpy
-msil [d'bass, d'hand, d'fly]
+msil [d'bass, d'hand, d'fly, d'arpy]
 
 d'drum $ cf $
   overlay (b3'drum) $
   (b3'perc # n (slow 3 $ run 4))
 
--- quickly
-d'arpy silence
 d'shard $ whenmod 7 3 (density (5%4)) $ plox'4 "[ice plode]*2"
 
+-- quickly
 d'drum $ cf $
   overlay (b3'drumf) $
   (b3'perc # n (slow 3 $ run 4))
 
 d'bass2 $ bass'5f
---d'arpy $ cf $ iter 9 $ b2'arpy
+
+d'arpy $ cf $ iter 9 $ b2'arpy
 
 d'hand $ b1'hand
   # shape ((/2) <$> slow (10%4) sinewave1)
@@ -496,15 +496,23 @@ d'hand $ b1'hand
 
 d'fly $ fly'2
 
+d'perc $ s "{wt/2, [~ wtsn]/8}"
+
+d'perc $ snare43'1
+d'perc $ whenmod 5 3 rev $ snare43'1
+d'perc $ whenmod 5 3 (rev . chop 8) $ snare43'1
+d'perc $ overlay fly'1f $ whenmod 5 3 (rev . chop 8) $ snare43'1
+d'perc $ overlay fly'1f $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
+
+d'arpy $ cf $
+  whenmod 7 4 (|+| vowel "a") $ -- this not used in brighton 2014 live rec.
+  iter 9 $ b2'arpy
+
 d'bass $ cf $
   spread slow [2,(7%4)] $
   whenmod 7 6 (density 1.5) $
   iter 4 $
   b3'bass
-
-d'arpy $ cf $
-  whenmod 7 4 (|+| vowel "a") $ -- this not used in brighton 2014 live rec.
-  iter 9 $ b2'arpy
 
 d'bass $ cf $
   spread slow [2,(7%4)] $
@@ -562,7 +570,7 @@ d'perc $ whenmod 5 3 (rev . chop 8) $ snare43'1
 d'perc $ overlay fly'1f $ whenmod 5 3 (rev . chop 8) $ snare43'1
 
 bpm 125
-bpm 135
+bpm 138
 bpm 138
 
 d'perc $ overlay fly'1f $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
