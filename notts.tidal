@@ -10,8 +10,9 @@ setlist:
 let bpm b = cps (b/60)
 hush
 
--- [1] piston vi
-
+{-
+1a> piston vi
+-}
 bpm 138
 
 d'bass $ bass'6
@@ -53,7 +54,9 @@ d'drum $ overlay sn'6 $ drum'6
 
 msil [d'perc,d'fly,d'bz]
 
--- [1b] pigs nose: raise
+{-
+1b> raise
+-}
 bpm 138
 bpm 120
 bpm 117
@@ -125,7 +128,9 @@ d'qs $ cf $
   # speed ((+1.2).(/2) <$> slow 3.2 triwave1)
   # gain "0.95"
 
--- transition to [1c] battery 1
+{-
+1c> battery 1
+-}
 d'hand $ b1'hand
 d'qs silence
 
@@ -192,7 +197,9 @@ msil [d'tac, d'bass]
 
 d'cymb $ (0.5 <~) $ cymb'2 "0.7"
 
--- merge in a bit of [1d] piston iii
+{-
+1d> piston iii
+-}
 d'bass2 $ bass'3 "o i" "1" True # gain "1"
 
 d'bass $ slow 4 $ b1'bass
@@ -232,8 +239,9 @@ d'drum $ cf $ every' 8 8 (density 1.5) $ every 2 (density 3) $ sound "[~ psn:1]"
 
 msil [d'hand, d'bz, d'bass, d'bass2, d'cymb]
 
--- [2] juliese
-
+{-
+2> juliese
+-}
 bpm 125
 bpm 105
 bpm 99
@@ -358,8 +366,9 @@ d'drum $ ju'drum2
 
 mapM_ ($ silence) [d'bass, d'udu, d'pc, d'perc]
 
--- [3] battery 2
-
+{-
+3a> battery 2
+-}
 d'perc $ cf $ s "uxay*2"
   # n "1"
 
@@ -418,8 +427,9 @@ msil [d'misc, d'perc]
 d'drum $ s "k/4"
 d'bass silence
 
--- transition to [3b] battery 3
-
+{-
+3b> battery 3
+-}
 d'fly $ fly'7
   # orbit "2"
   # delay "0.6"
@@ -539,7 +549,9 @@ d'drum $ cf $
   iter 2 $
   (b3'perc # n (slow 3 $ run 4))
 
--- transition to [3c] piston viii
+{-
+3c> piston viii
+-}
 d'bass $ slow 16 $ bass' 64
 
 d'perc $ s "{wt/2, [~ wtsn]/8}"
@@ -587,8 +599,9 @@ msil [d'bz,d'cymb,d'misc]
 
 solo $ d'perc $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
 
--- [4] haddeo (algorave remix)
-
+{-
+4> haddeo (algorave remix)
+-}
 bpm 135
 bpm 110
 bpm 105

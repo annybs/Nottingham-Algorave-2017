@@ -1,5 +1,5 @@
 {-
-p6 ~1a~ @ 138
+1a> p6 @ 138
 -}
 d'bass $ bass'6
 
@@ -34,7 +34,7 @@ d'cymb $ (0.5 <~) $ cymb'2 "0.7"
 msil [d'perc,d'fly,d'bz]
 
 {-
-r ~1b~ @ 117
+1b> r @ 117
 -}
 msil [d'gnome, d'bass]
 
@@ -70,7 +70,7 @@ d'jbass $ slow 8 $ sound "jungbass jungbass:1"
   # speed "1.2"
 
 {-
-b1 ~1c~ @ 125
+1c> b1 @ 125
 -}
 d'hand $ b1'hand
   # shape ((/2) <$> slow (10%4) sinewave1) -- (1)
@@ -114,6 +114,9 @@ d'drum $ cf $
 
 msil [d'tac, d'bass]
 
+{-
+1d> p3
+-}
 d'cymb $ (0.5 <~) $ cymb'2 "0.7"
 
 d'bass2 $ bass'3 "o i" "1" True # gain "1" -- "0"
@@ -123,7 +126,7 @@ d'warb $ b1'warbler
 msil [d'hand, d'bz, d'bass, d'bass2, d'cymb]
 
 {-
-j ~2~ @ 99
+2> j @ 99
 -}
 d'bass $
   slowspread (\x -> within (0.5, 1) (x)) [id, slow 2 . brak] $ -- (4) later
@@ -181,3 +184,57 @@ mapM_ ($ silence) [d'eg, d'wbass]
 d'drum $ ju'drum2
 mapM_ ($ silence) [d'bass, d'udu, d'pc, d'perc]
 
+{-
+3a> b2 @ 125
+-}
+d'perc $ cf $ s "uxay*2"
+  # n "1"
+
+mapM_ ($ silence) [d'gt, d'drum]
+
+d'perc $ b2'ux
+  # speed "[0.7 1 1.2]/2"
+
+d'drum $ overlay (s "k") $ -- (3)
+  cf $ every 3 (0.125 <~) $ -- (2)
+  b2'psr -- (1) then psrf
+
+d'perc $ b2'ux2 False -- (1) True
+
+d'tr $ cf $ b2'trump "[~ trump ! !] ~"
+  # speed (halfosc1 <$> slow 4 sinewave1) -- (1)
+
+d'bass $ b2'bass
+  -- # shape (halfosc <$> saw1) -- (3) replacing (2)
+  # shape "0.1" -- (1) 0.2 (2) 0.3
+
+d'arpy $ cf $
+  whenmod 7 4 (|+| vowel "a") $
+  iter 9 $ b2'arpy
+
+msil [d'misc, d'perc]
+d'drum $ s "k/4"
+d'bass silence
+
+{-
+3b> b3
+-}
+d'fly $ fly'7
+  # orbit "2"
+  # delay "0.6"
+  # delayfeedback "0.4"
+  # delaytime "0.62" --(112/60)/3
+
+d'perc $ cf $
+  slow 2 . spread slow [2,4,2,3] $
+  jux (0.25 <~) $ b1'perc
+  # n (density 3 $ run 2)
+
+d'drum $ overlay (s "k/4") $
+  cf $ b3'perc
+
+d'bass $ cf $
+  spread slow [2,(7%4)] $ -- (2)
+  whenmod 7 6 (density 1.5) $ -- (1)
+  iter 4 $ -- (3)
+  b3'bass
