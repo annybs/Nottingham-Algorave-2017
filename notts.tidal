@@ -605,6 +605,7 @@ bpm 135
 bpm 110
 bpm 105 -- lower bpm before solo - nice hip hop feel
 
+d'bass silence
 solo $ d'perc $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
 
 {-
