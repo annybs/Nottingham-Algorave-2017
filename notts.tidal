@@ -564,15 +564,11 @@ d'bass $ slow 16 $ bass' 64
 
 d'perc $ s "{wt/2, [~ wtsn]/8}"
 
-d'perc $ snare43'1
-d'perc $ whenmod 5 3 rev $ snare43'1
-d'perc $ whenmod 5 3 (rev . chop 8) $ snare43'1
-d'perc $ overlay fly'1f $ whenmod 5 3 (rev . chop 8) $ snare43'1
-
 bpm 125
 bpm 138
 bpm 138
 
+-- add in at 133bpm or so
 d'perc $ overlay fly'1f $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
 
 d'drum $ overlay (s "[k [sn ~ ~ k] [~ k*2] sn]/4") $
@@ -605,14 +601,15 @@ msil [d'gnome,d'ant]
 d'bz $ every 3 brak $ bzox'4 "~ bzl"
 msil [d'bz,d'cymb,d'misc]
 
+bpm 135
+bpm 110
+bpm 105 -- lower bpm before solo - nice hip hop feel
+
 solo $ d'perc $ within (0.5, 1) (slow (3%2) . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
 
 {-
 4> haddeo (algorave remix)
 -}
-bpm 135
-bpm 110
-bpm 105
 
 -- pt 1: intro
 
