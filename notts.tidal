@@ -473,22 +473,21 @@ d'tac $ cf $ cf . whenmod 7 4 (density 1.5) $ b1'tac
 
 -- quickly
 d'arpy $ cf $ iter 9 $ b2'arpy
-msil [d'bass, d'hand, d'fly, d'arpy]
+msil [d'bass, d'hand, d'fly]
 
 d'drum $ cf $
   overlay (b3'drum) $
   (b3'perc # n (slow 3 $ run 4))
 
+d'arpy silence
 d'shard $ whenmod 7 3 (density (5%4)) $ plox'4 "[ice plode]*2"
 
--- quickly
 d'drum $ cf $
   overlay (b3'drumf) $
   (b3'perc # n (slow 3 $ run 4))
 
+d'shard silence
 d'bass2 $ bass'5f
-
-d'arpy $ cf $ iter 9 $ b2'arpy
 
 d'hand $ b1'hand
   # shape ((/2) <$> slow (10%4) sinewave1)
@@ -520,7 +519,7 @@ d'bass $ cf $
   iter 4 $
   b3'bassf
 
-msil [d'ant, d'fly, d'perc, d'hand, d'shard, d'tac]
+msil [d'ant, d'fly, d'perc, d'hand, d'tac]
 
 -- drum solo-ish for a bit
 d'drum $ cf $
@@ -561,8 +560,6 @@ d'drum $ cf $
 3c> piston viii
 -}
 d'bass $ slow 16 $ bass' 64
-
-d'perc $ s "{wt/2, [~ wtsn]/8}"
 
 bpm 125
 bpm 138

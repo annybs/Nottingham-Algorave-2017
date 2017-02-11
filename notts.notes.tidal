@@ -262,7 +262,9 @@ d'drum $ cf $
 d'arpy silence
 d'shard $ whenmod 7 3 (density (5%4)) $ plox'4 "[ice plode]*2"
 
+d'shard silence
 d'bass $ bass'5f
+-- hand
 d'fly $ fly'2
 
 d'perc $ s "{wt/2, [~ wtsn]/8}"
